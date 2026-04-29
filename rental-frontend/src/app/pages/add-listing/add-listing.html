@@ -1,0 +1,6 @@
+<h2>Add New Property</h2>
+<input [(ngModel)]="newListing.title" placeholder="Property Title">
+<input [(ngModel)]="newListing.location" placeholder="Location">
+<input [(ngModel)]="newListing.price_pcm" type="number" placeholder="Price PCM">
+
+<button (click)="addListing()">Post Listing</button>

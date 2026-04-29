@@ -1,0 +1,29 @@
+import { Component } from '@angular/core';
+import { ApiService } from '../../services/api'; // Note: your file is api.ts
+import { AuthService } from '../../services/auth'; // Note: your file is auth.ts
+import { FormsModule } from '@angular/forms';
+
+@Component({
+  selector: 'app-add-listing',
+  standalone: true,
+  imports: [FormsModule],
+  templateUrl: './add-listing.component.html'
+})
+export class AddListingComponent {
+  newListing = { title: '', location: '', price_pcm: 0 };
+
+  constructor(private api: ApiService, private auth: AuthService) {}
+
+  addListing() {
+    const token = this.auth.getToken();
+    if (!token) {
+      alert("Please login first!");
+      return;
+    }
+
+    this.api.addListing(this.newListing, token).subscribe({
+      next: (res) => alert("Listing added successfully!"),
+      error: (err) => alert("Error adding listing. Check console.")
+    });
+  }
+}
