@@ -1,10 +1,7 @@
-import { Routes } from '@angular/router';
-import { ListingsComponent } from './pages/listings/listings';
-import { LoginComponent } from './pages/login/login';
-import { AddListingComponent } from './pages/add-listing/add-listing';
+import { authGuard } from './auth-guard';
 
 export const routes: Routes = [
   { path: '', component: ListingsComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'add', component: AddListingComponent }
+  { path: 'add', component: AddListingComponent, canActivate: [authGuard] }
 ];

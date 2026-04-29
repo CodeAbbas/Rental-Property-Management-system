@@ -7,23 +7,30 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-add-listing',
   standalone: true,
   imports: [FormsModule],
-  templateUrl: './add-listing.component.html'
+  templateUrl: './add-listing.html'
 })
 export class AddListingComponent {
   newListing = { title: '', location: '', price_pcm: 0 };
 
   constructor(private api: ApiService, private auth: AuthService) {}
 
-  addListing() {
-    const token = this.auth.getToken();
-    if (!token) {
-      alert("Please login first!");
-      return;
-    }
+addListing() {
+  const token = this.auth.getToken();
 
-    this.api.addListing(this.newListing, token).subscribe({
-      next: (res) => alert("Listing added successfully!"),
-      error: (err) => alert("Error adding listing. Check console.")
-    });
+  if (!token) {
+    alert("Please login first!");
+    return;
   }
+
+  this.api.addListing(this.newListing, token).subscribe({
+    next: (res) => {
+      alert("Listing added successfully!");
+      console.log(res);
+    },
+    error: (err) => {
+      console.error(err);
+      alert("Error adding listing");
+    }
+  });
+}
 }
