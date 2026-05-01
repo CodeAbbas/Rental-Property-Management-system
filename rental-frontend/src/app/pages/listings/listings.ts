@@ -14,26 +14,27 @@ export class ListingsComponent implements OnInit {
 
   listings: any[] = [];
   searchText = '';
+  loading = false;
+  editingId = '';
+  editListingData = { title: '', location: '', price_pcm: 0 };
 
   constructor(private api: ApiService, private auth: AuthService) {}
 
   ngOnInit() {
-    console.log("Listings component loaded");
     this.loadListings();
   }
 
   loadListings() {
+    this.loading = true;
+
     this.api.getListings().subscribe({
       next: (res: any) => {
-        console.log("API Response:", res);
-        console.log("DEBUG RESPONSE:", res);
-        console.log("TYPE:", typeof res);
-        console.log("IS ARRAY:", Array.isArray(res));
-        console.log("LENGTH:", res?.length);
         this.listings = Array.isArray(res) ? res : [];
+        this.loading = false;
       },
       error: (err) => {
         console.error("Error fetching listings:", err);
+        this.loading = false;
       }
     });
   }
@@ -67,10 +68,74 @@ export class ListingsComponent implements OnInit {
 
     this.api.searchListings(query).subscribe({
       next: (res: any) => {
-        this.listings = res;
+        this.listings = Array.isArray(res) ? res : [];
       },
       error: (err) => {
         console.error("Error searching listings:", err);
+      }
+    });
+  }
+
+  startEdit(item: any) {
+    this.editingId = item._id;
+    this.editListingData = {
+      title: item.title,
+      location: item.location,
+      price_pcm: item.price_pcm
+    };
+  }
+
+  cancelEdit() {
+    this.editingId = '';
+    this.editListingData = { title: '', location: '', price_pcm: 0 };
+  }
+
+  updateListing(id: string) {
+    const token = this.auth.getToken();
+
+    if (!token) {
+      alert("Please login first!");
+      return;
+    }
+
+    if (!this.editListingData.title || !this.editListingData.location || !this.editListingData.price_pcm) {
+      alert("Please fill in title, location and price.");
+      return;
+    }
+
+    this.api.updateListing(id, this.editListingData, token).subscribe({
+      next: () => {
+        alert("Listing updated successfully!");
+        this.cancelEdit();
+        this.loadListings();
+      },
+      error: (err) => {
+        console.error("Error updating listing:", err);
+        alert("Error updating listing");
+      }
+    });
+  }
+
+  deleteListing(id: string) {
+    const token = this.auth.getToken();
+
+    if (!token) {
+      alert("Please login first!");
+      return;
+    }
+
+    if (!confirm("Are you sure you want to delete this listing?")) {
+      return;
+    }
+
+    this.api.deleteListing(id, token).subscribe({
+      next: () => {
+        alert("Listing deleted successfully!");
+        this.loadListings();
+      },
+      error: (err) => {
+        console.error("Error deleting listing:", err);
+        alert("Error deleting listing");
       }
     });
   }

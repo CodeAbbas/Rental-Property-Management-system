@@ -1,23 +1,51 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { of } from 'rxjs';
 
-import { Login } from './login';
+import { LoginComponent } from './login';
+import { ApiService } from '../../services/api';
+import { AuthService } from '../../services/auth';
+import { Router } from '@angular/router';
 
-describe('Login', () => {
-  let component: Login;
-  let fixture: ComponentFixture<Login>;
+describe('LoginComponent', () => {
+  let component: LoginComponent;
+  let fixture: ComponentFixture<LoginComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Login]
+      imports: [LoginComponent],
+      providers: [
+        {
+          provide: ApiService,
+          useValue: {
+            login: () => of({ token: 'test-token' })
+          }
+        },
+        {
+          provide: AuthService,
+          useValue: {
+            saveToken: () => {}
+          }
+        },
+        {
+          provide: Router,
+          useValue: {
+            navigate: () => {}
+          }
+        }
+      ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(Login);
+    fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should have login data', () => {
+    expect(component.loginData).toBeDefined();
   });
 });

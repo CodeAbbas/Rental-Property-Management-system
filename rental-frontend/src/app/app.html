@@ -1,9 +1,11 @@
-<nav style="margin-bottom: 20px;">
-  <a routerLink="/">Home</a> |
-  <a routerLink="/login">Login</a> |
-  <a routerLink="/add">Add</a> |
-  <a routerLink="/favorites">Favorites</a> |
-  <a routerLink="/analytics">Analytics</a>
-</nav>
+<div style="min-height: 100vh; background-color: #f4f6f8; padding: 20px; font-family: Arial, sans-serif;">
+  <nav style="background: white; padding: 15px; margin-bottom: 20px; border: 1px solid #ddd;">
+    <a routerLink="/" style="margin-right: 10px; color: #333;">Home</a>
+    <a routerLink="/login" style="margin-right: 10px; color: #333;">Login</a>
+    <a routerLink="/add" style="margin-right: 10px; color: #333;">Add</a>
+    <a routerLink="/favorites" style="margin-right: 10px; color: #333;">Favorites</a>
+    <a routerLink="/analytics" style="color: #333;">Analytics</a>
+  </nav>
 
-<router-outlet></router-outlet>
+  <router-outlet></router-outlet>
+</div>

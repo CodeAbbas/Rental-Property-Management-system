@@ -1,14 +1,18 @@
-<h2>Analytics</h2>
+<h2 style="margin-bottom: 15px;">Analytics</h2>
 
 <h3>Average Rent</h3>
-<div *ngFor="let item of averageRent" style="border:1px solid #ccc; margin:10px; padding:10px;">
+<p *ngIf="averageRent.length === 0">No average rent data available.</p>
+
+<div *ngFor="let item of averageRent" style="background: white; border: 1px solid #ddd; margin-bottom: 15px; padding: 15px;">
   <p><strong>Location:</strong> {{item._id}}</p>
   <p><strong>Average Rent:</strong> £{{item.average_price_pcm}}</p>
   <p><strong>Total Listings:</strong> {{item.total_listings_in_area}}</p>
 </div>
 
 <h3>Popular Property Types</h3>
-<div *ngFor="let item of popularTypes" style="border:1px solid #ccc; margin:10px; padding:10px;">
+<p *ngIf="popularTypes.length === 0">No popular property type data available.</p>
+
+<div *ngFor="let item of popularTypes" style="background: white; border: 1px solid #ddd; margin-bottom: 15px; padding: 15px;">
   <p><strong>Type:</strong> {{item._id}}</p>
   <p><strong>Total:</strong> {{item.total_count}}</p>
 </div>

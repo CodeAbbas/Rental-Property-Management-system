@@ -1,13 +1,87 @@
-<h2>Properties</h2>
+<h2 style="margin-bottom: 15px;">Properties</h2>
 
-<input [(ngModel)]="searchText" placeholder="Search by title, location or description">
-<button (click)="search()">Search</button>
+<div style="margin-bottom: 20px;">
+  <input
+    [(ngModel)]="searchText"
+    placeholder="Search by title, location or description"
+    style="padding: 8px; width: 260px; border: 1px solid #ccc;"
+  >
+  <button
+    (click)="search()"
+    style="padding: 8px 14px; border: 1px solid #555; background: #333; color: white; cursor: pointer;"
+  >
+    Search
+  </button>
+</div>
 
-<p *ngIf="listings.length === 0">No properties found</p>
+<p *ngIf="loading">Loading...</p>
+<p *ngIf="!loading && listings.length === 0">No properties found</p>
 
-<div *ngFor="let item of listings" style="border:1px solid #ccc; margin:10px; padding:10px;">
-  <h3>{{item.title}}</h3>
-  <p><strong>Location:</strong> {{item.location}}</p>
-  <p><strong>Price:</strong> £{{item.price_pcm}}</p>
-  <button (click)="addToFav(item._id)">❤️ Favorite</button>
+<div *ngFor="let item of listings" style="background: white; border: 1px solid #ddd; margin-bottom: 15px; padding: 15px;">
+  <div *ngIf="editingId !== item._id">
+    <h3>{{item.title}}</h3>
+    <p><strong>Location:</strong> {{item.location}}</p>
+    <p><strong>Price:</strong> £{{item.price_pcm}}</p>
+
+    <button
+      (click)="addToFav(item._id)"
+      style="padding: 8px 12px; border: 1px solid #777; background: #fff; cursor: pointer; margin-right: 8px;"
+    >
+      ❤️ Favorite
+    </button>
+
+    <button
+      (click)="startEdit(item)"
+      style="padding: 8px 12px; border: 1px solid #777; background: #eef5ff; cursor: pointer; margin-right: 8px;"
+    >
+      Edit
+    </button>
+
+    <button
+      (click)="deleteListing(item._id)"
+      style="padding: 8px 12px; border: 1px solid #777; background: #ffecec; cursor: pointer;"
+    >
+      Delete
+    </button>
+  </div>
+
+  <div *ngIf="editingId === item._id">
+    <h3>Edit Listing</h3>
+
+    <input
+      [(ngModel)]="editListingData.title"
+      placeholder="Title"
+      required
+      style="display: block; margin-bottom: 8px; padding: 8px; width: 260px; border: 1px solid #ccc;"
+    >
+
+    <input
+      [(ngModel)]="editListingData.location"
+      placeholder="Location"
+      required
+      style="display: block; margin-bottom: 8px; padding: 8px; width: 260px; border: 1px solid #ccc;"
+    >
+
+    <input
+      [(ngModel)]="editListingData.price_pcm"
+      type="number"
+      placeholder="Price PCM"
+      required
+      style="display: block; margin-bottom: 8px; padding: 8px; width: 260px; border: 1px solid #ccc;"
+    >
+
+    <button
+      (click)="updateListing(item._id)"
+      style="padding: 8px 12px; border: 1px solid #555; background: #333; color: white; cursor: pointer; margin-right: 8px;"
+    >
+      Save
+    </button>
+
+    <button
+      (click)="cancelEdit()"
+      style="padding: 8px 12px; border: 1px solid #777; background: #fff; cursor: pointer;"
+    >
+      Cancel
+    </button>
+  </div>
 </div>
