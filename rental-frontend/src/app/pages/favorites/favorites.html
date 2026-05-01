@@ -1,1 +1,9 @@
-<p>favorites works!</p>
+<h2>My Favorite Properties</h2>
+
+<p *ngIf="favorites.length === 0">No favorites yet.</p>
+
+<div *ngFor="let item of favorites" style="border:1px solid #ccc; margin:10px; padding:10px;">
+  <h3>{{item.title}}</h3>
+  <p><strong>Location:</strong> {{item.location}}</p>
+  <p><strong>Price:</strong> £{{item.price_pcm}}</p>
+</div>
