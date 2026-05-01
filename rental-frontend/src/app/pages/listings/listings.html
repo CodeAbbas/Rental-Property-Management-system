@@ -3,6 +3,8 @@
 <input [(ngModel)]="searchText" placeholder="Search by title, location or description">
 <button (click)="search()">Search</button>
 
+<p *ngIf="listings.length === 0">No properties found</p>
+
 <div *ngFor="let item of listings" style="border:1px solid #ccc; margin:10px; padding:10px;">
   <h3>{{item.title}}</h3>
   <p><strong>Location:</strong> {{item.location}}</p>

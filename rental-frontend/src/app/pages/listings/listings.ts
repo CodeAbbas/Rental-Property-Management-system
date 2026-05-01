@@ -26,7 +26,11 @@ export class ListingsComponent implements OnInit {
     this.api.getListings().subscribe({
       next: (res: any) => {
         console.log("API Response:", res);
-        this.listings = res;
+        console.log("DEBUG RESPONSE:", res);
+        console.log("TYPE:", typeof res);
+        console.log("IS ARRAY:", Array.isArray(res));
+        console.log("LENGTH:", res?.length);
+        this.listings = Array.isArray(res) ? res : [];
       },
       error: (err) => {
         console.error("Error fetching listings:", err);
