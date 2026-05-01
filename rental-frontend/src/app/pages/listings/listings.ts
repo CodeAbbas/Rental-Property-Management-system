@@ -24,6 +24,10 @@ export class ListingsComponent implements OnInit {
     this.loadListings();
   }
 
+  isLoggedIn() {
+    return this.auth.isLoggedIn();
+  }
+
   loadListings() {
     this.loading = true;
 

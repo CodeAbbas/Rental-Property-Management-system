@@ -10,6 +10,13 @@ export class ApiService {
 
   constructor(private http: HttpClient) {}
 
+  private getAuthHeaders(token: string) {
+    return {
+      'Authorization': `Bearer ${token}`,
+      'x-access-token': token
+    };
+  }
+
   getListings() {
     return this.http.get(`${this.baseUrl}/listings`);
   }
@@ -32,43 +39,43 @@ export class ApiService {
 
   addListing(data: any, token: string) {
     return this.http.post(`${this.baseUrl}/listings`, data, {
-      headers: { 'x-access-token': token }
+      headers: this.getAuthHeaders(token)
     });
   }
 
   updateListing(id: string, data: any, token: string) {
     return this.http.put(`${this.baseUrl}/listings/${id}`, data, {
-      headers: { 'x-access-token': token }
+      headers: this.getAuthHeaders(token)
     });
   }
 
   deleteListing(id: string, token: string) {
     return this.http.delete(`${this.baseUrl}/listings/${id}`, {
-      headers: { 'x-access-token': token }
+      headers: this.getAuthHeaders(token)
     });
   }
 
   getFavorites(token: string) {
     return this.http.get(`${this.baseUrl}/user/favorites`, {
-      headers: { 'x-access-token': token }
+      headers: this.getAuthHeaders(token)
     });
   }
 
   addFavorite(id: string, token: string) {
     return this.http.post(`${this.baseUrl}/user/favorites/${id}`, {}, {
-      headers: { 'x-access-token': token }
+      headers: this.getAuthHeaders(token)
     });
   }
 
   getAvgRent(token: string) {
     return this.http.get(`${this.baseUrl}/analytics/average-rent`, {
-      headers: { 'x-access-token': token }
+      headers: this.getAuthHeaders(token)
     });
   }
 
   getPopularTypes(token: string) {
     return this.http.get(`${this.baseUrl}/analytics/popular-types`, {
-      headers: { 'x-access-token': token }
+      headers: this.getAuthHeaders(token)
     });
   }
 }
