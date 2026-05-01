@@ -103,7 +103,7 @@ export class ListingsComponent implements OnInit {
     }
 
     if (!this.editListingData.title || !this.editListingData.location || !this.editListingData.price_pcm) {
-      alert("Please fill in title, location and price.");
+      alert("All fields required");
       return;
     }
 

@@ -1,18 +1,35 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { of } from 'rxjs';
 
-import { Register } from './register';
+import { RegisterComponent } from './register';
+import { ApiService } from '../../services/api';
+import { Router } from '@angular/router';
 
-describe('Register', () => {
-  let component: Register;
-  let fixture: ComponentFixture<Register>;
+describe('RegisterComponent', () => {
+  let component: RegisterComponent;
+  let fixture: ComponentFixture<RegisterComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Register]
+      imports: [RegisterComponent],
+      providers: [
+        {
+          provide: ApiService,
+          useValue: {
+            register: () => of({})
+          }
+        },
+        {
+          provide: Router,
+          useValue: {
+            navigate: () => {}
+          }
+        }
+      ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(Register);
+    fixture = TestBed.createComponent(RegisterComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

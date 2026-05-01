@@ -26,7 +26,8 @@ describe('ListingsComponent', () => {
         {
           provide: AuthService,
           useValue: {
-            getToken: () => 'test-token'
+            getToken: () => 'test-token',
+            isLoggedIn: () => true
           }
         }
       ]
@@ -38,11 +39,11 @@ describe('ListingsComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create component', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should load listings', () => {
+  it('should have listings array', () => {
     expect(component.listings).toBeDefined();
   });
 

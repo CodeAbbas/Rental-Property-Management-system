@@ -22,6 +22,11 @@ addListing() {
     return;
   }
 
+  if (!this.newListing.title || !this.newListing.location || !this.newListing.price_pcm) {
+    alert("All fields required");
+    return;
+  }
+
   this.api.addListing(this.newListing, token).subscribe({
     next: (res) => {
       alert("Listing added successfully!");
